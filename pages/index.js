@@ -3,14 +3,30 @@ import Head from 'next/head'
 export default function Home() {
   return (
     <div className="container">
+
       <Head>
         <title>Create Next App</title>
         <link rel="icon" href="/favicon.ico" />
+
+        <script
+        async
+        src="https://www.googletagmanager.com/gtag/js?id=[GTM-T4JN2W3]"
+      />
+      <script
+          dangerouslySetInnerHTML={{
+            __html: `
+                  window.dataLayer = window.dataLayer || [];
+                  function gtag(){dataLayer.push(arguments);}
+                  gtag('js', new Date());
+                  gtag('config', '[GTM-T4JN2W3]');
+              `,
+          }}
+        />       
       </Head>
 
       <main>
         <h1 className="title">
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
+          APP With  <a href="#">A/B test</a>
         </h1>
 
         <p className="description">
