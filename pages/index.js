@@ -9,7 +9,8 @@ export default function Home() {
       dataLayer.push({'event': 'optimize.activate.my.first.experiment'});
 
       function implementExperimentA(value) {
-        console.log("variante is:", value);
+        console.log("Run the implementExperimentA");
+        console.log("value", value);
         setVariant(value);
         if (value ==  '0') {
           // Provide code for visitors in the original.
@@ -18,24 +19,11 @@ export default function Home() {
         }
       }  
 
-      window.gtag('event', 'optimize.activate.my.first.experiment', {
+      window.gtag('event', 'optimize.callback', {
         name: 'cP6RXp4FQw-MPFk4uwSK5A',
         callback: implementExperimentA
      });      
 
-
-
-    implementManyExperiments(value, name) {
-      console.log("Run the implementManyExperiments");
-      console.log("value", value);
-      console.log("name", name);
-      setVariant(value);
-    }
-    
-    gtag('event', 'optimize.callback', {
-        callback: implementManyExperiments
-     });   
-     
 
   }, [])
 
