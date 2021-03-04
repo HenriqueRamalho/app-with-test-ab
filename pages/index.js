@@ -1,6 +1,9 @@
 import react from 'react';
 import Head from 'next/head'
 
+/* 
+https://support.google.com/optimize/answer/9059383
+*/
 export default function Home() {
   const [variant, setVariant] = react.useState('não definida');
   const [experimentIsReady, setExperimentIsReady] = react.useState(false);
@@ -29,10 +32,20 @@ export default function Home() {
       window.gtag('event', 'optimize.callback', {
         name: 'cP6RXp4FQw-MPFk4uwSK5A',
         callback: implementExperimentA
-      });      
-
+      });    
 
   }, [])
+
+  const _handleClick = (e) => {
+    e.preventDefault();
+    console.log('converter objetivo');
+    dataLayer.push({
+      'event': 'interaction',
+      'event_category': 'appTest',
+      'event_action': 'actionTestGOal',
+      'event_label': 'labelTestgoal'
+    });
+  }  
 
   return (
     <div className="container">
@@ -80,12 +93,12 @@ export default function Home() {
 
           <div className="card">
             <h3>Without wait</h3>
-            <a className={`button ${buttonStyle}`}>Variante: {variant}</a>
+            <a className={`button ${buttonStyle}`} onClick={_handleClick}>Variante: {variant}</a>
           </div>
           <div className="card">
             <h3>Wait test callback</h3>
             {experimentIsReady && (
-              <a className={`button ${buttonStyle}`}>Variante: {variant}</a>
+              <a className={`button ${buttonStyle}`} onClick={_handleClick}>Variante: {variant}</a>
             )}
           </div>
         </div>
