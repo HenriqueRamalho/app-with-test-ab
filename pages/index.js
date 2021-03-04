@@ -1,17 +1,26 @@
+import react from 'react';
 import Head from 'next/head'
 
 export default function Home() {
+
+  react.useEffect(() => {
+
+      dataLayer.push({'event': 'optimize.activate.my.first.experiment'});
+
+  }, [])
+
   return (
     <div className="container">
 
       <Head>
-        <title>Create Next App</title>
+        <title>Create Next App - {JSON.stringify(process.env.NODE_ENV)}</title>
         <link rel="icon" href="/favicon.ico" />
 
         <script
         async
         src="https://www.googletagmanager.com/gtag/js?id=G-KLCZXCWZYS"
       />
+      <script src="https://www.googleoptimize.com/optimize.js?id=OPT-MSKC8LF"></script>
       <script
           dangerouslySetInnerHTML={{
             __html: `
@@ -36,7 +45,7 @@ export default function Home() {
         <div className="grid">
           <a href="https://nextjs.org/docs" className="card">
             <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
+            <p>Environment: {JSON.stringify(process.env.NODE_ENV)}</p>
           </a>
 
           <a href="https://nextjs.org/learn" className="card">
