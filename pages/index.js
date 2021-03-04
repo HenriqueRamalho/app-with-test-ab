@@ -23,6 +23,19 @@ export default function Home() {
         callback: implementExperimentA
      });      
 
+
+
+     function implementManyExperiments(value, name) {
+        console.log("Run the implementManyExperiments");
+        console.log("value", value);
+        console.log("name", name);
+    }
+    
+    gtag('event', 'optimize.callback', {
+        callback: implementManyExperiments
+     });   
+     
+
   }, [])
 
   return (
