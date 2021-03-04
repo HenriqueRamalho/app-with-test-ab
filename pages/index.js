@@ -15,7 +15,7 @@ export default function Home() {
         console.log("Run the implementExperimentA");
         console.log("value", value);
         console.log(value);
-        experimentIsReady(true);
+        setExperimentIsReady(true);
         setVariant(value);
         if (value ==  '0') {
           // original version
