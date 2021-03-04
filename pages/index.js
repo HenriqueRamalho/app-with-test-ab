@@ -25,10 +25,11 @@ export default function Home() {
 
 
 
-     function implementManyExperiments(value, name) {
-        console.log("Run the implementManyExperiments");
-        console.log("value", value);
-        console.log("name", name);
+    implementManyExperiments(value, name) {
+      console.log("Run the implementManyExperiments");
+      console.log("value", value);
+      console.log("name", name);
+      setVariant(value);
     }
     
     gtag('event', 'optimize.callback', {
