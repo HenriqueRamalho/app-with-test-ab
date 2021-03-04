@@ -2,8 +2,10 @@ import react from 'react';
 import Head from 'next/head'
 
 export default function Home() {
-  const [variant, setVariant] = react.useState('none');
+  const [variant, setVariant] = react.useState('não definida');
+  const [buttonStyle, setButtonStyle] = react.useState('button--blue');
 
+  
   react.useEffect(() => {
 
       dataLayer.push({'event': 'optimize.activate.my.first.experiment'});
@@ -11,18 +13,21 @@ export default function Home() {
       function implementExperimentA(value) {
         console.log("Run the implementExperimentA");
         console.log("value", value);
+        console.log(value);
         setVariant(value);
         if (value ==  '0') {
-          // Provide code for visitors in the original.
+          // original version
+          setButtonStyle('button--blue')
         } else if (value == '1') {
-          // Provide code for visitors in first variant.
+          // variant 1 version
+          setButtonStyle('button--yellow')
         }
       }  
 
       window.gtag('event', 'optimize.callback', {
         name: 'cP6RXp4FQw-MPFk4uwSK5A',
         callback: implementExperimentA
-     });      
+      });      
 
 
   }, [])
@@ -71,23 +76,11 @@ export default function Home() {
             <p>{variant}</p>
           </a>
 
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className="card"
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className="card"
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
+          <div className="card">
+            <h3>Button</h3>
+            <a className={`button ${buttonStyle}`}>Variante: {variant}</a>
+          </div>
+          <div className="card"></div>
         </div>
       </main>
 
@@ -223,6 +216,22 @@ export default function Home() {
 
         .logo {
           height: 1em;
+        }
+
+        .button {
+          background-color: #C6C6C6;
+          padding: 10px 15px;
+          border-radius: 4px;          
+        }
+
+        .button--blue {
+          background-color: #0300F5;  
+          color: #fff;       
+        }
+
+        .button--yellow {
+          background-color: #EBC617;
+          color: #000000;
         }
 
         @media (max-width: 600px) {
