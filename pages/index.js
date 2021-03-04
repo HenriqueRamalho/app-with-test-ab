@@ -18,7 +18,7 @@ export default function Home() {
 
         <script
         async
-        src="https://www.googletagmanager.com/gtag/js?id=G-KLCZXCWZYS"
+        src="https://www.googletagmanager.com/gtag/js?id=UA-191147710-1"
       />
       <script src="https://www.googleoptimize.com/optimize.js?id=OPT-MSKC8LF"></script>
       <script
@@ -27,7 +27,7 @@ export default function Home() {
                   window.dataLayer = window.dataLayer || [];
                   function gtag(){dataLayer.push(arguments);}
                   gtag('js', new Date());
-                  gtag('config', 'G-KLCZXCWZYS');
+                  gtag('config', 'UA-191147710-1');
               `,
           }}
         />       
