@@ -2,6 +2,7 @@ import react from 'react';
 import Head from 'next/head'
 
 export default function Home() {
+  const [variant, setVariant] = react.useState('none');
 
   react.useEffect(() => {
 
@@ -9,6 +10,7 @@ export default function Home() {
 
       function implementExperimentA(value) {
         console.log("variante is:", value);
+        setVariant(value);
         if (value ==  '0') {
           // Provide code for visitors in the original.
         } else if (value == '1') {
@@ -16,7 +18,7 @@ export default function Home() {
         }
       }  
 
-      gtag('event', 'optimize.activate.my.first.experiment', {
+      window.gtag('event', 'optimize.activate.my.first.experiment', {
         name: 'cP6RXp4FQw-MPFk4uwSK5A',
         callback: implementExperimentA
      });      
@@ -57,14 +59,14 @@ export default function Home() {
         </p>
 
         <div className="grid">
-          <a href="https://nextjs.org/docs" className="card">
-            <h3>Documentation &rarr;</h3>
-            <p>Environment: {JSON.stringify(process.env.NODE_ENV)}</p>
+          <a href="#" className="card">
+            <h3>Environment &rarr;</h3>
+            <p>{JSON.stringify(process.env.NODE_ENV)}</p>
           </a>
 
-          <a href="https://nextjs.org/learn" className="card">
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
+          <a href="#" className="card">
+            <h3>Variant</h3>
+            <p>{variant}</p>
           </a>
 
           <a
