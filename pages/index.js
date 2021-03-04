@@ -3,6 +3,7 @@ import Head from 'next/head'
 
 export default function Home() {
   const [variant, setVariant] = react.useState('não definida');
+  const [experimentIsReady, setExperimentIsReady] = react.useState(false);
   const [buttonStyle, setButtonStyle] = react.useState('button--blue');
 
   
@@ -14,6 +15,7 @@ export default function Home() {
         console.log("Run the implementExperimentA");
         console.log("value", value);
         console.log(value);
+        experimentIsReady(true);
         setVariant(value);
         if (value ==  '0') {
           // original version
@@ -77,10 +79,15 @@ export default function Home() {
           </a>
 
           <div className="card">
-            <h3>Button</h3>
+            <h3>Without wait</h3>
             <a className={`button ${buttonStyle}`}>Variante: {variant}</a>
           </div>
-          <div className="card"></div>
+          <div className="card">
+            <h3>Wait test callback</h3>
+            {experimentIsReady && (
+              <a className={`button ${buttonStyle}`}>Variante: {variant}</a>
+            )}
+          </div>
         </div>
       </main>
 
