@@ -4,6 +4,9 @@ import Head from 'next/head'
 /* 
 https://support.google.com/optimize/answer/9059383
 */
+
+const EXPERIMENT_ID = process.env.NODE_ENV === 'production' ? 'cP6RXp4FQw-MPFk4uwSK5A' : 'hihZQwxFTXCtANQyhJ79YQ'; 
+
 export default function Home() {
   const [variant, setVariant] = react.useState('não definida');
   const [experimentIsReady, setExperimentIsReady] = react.useState(false);
@@ -20,6 +23,7 @@ export default function Home() {
         console.log(value);
         setExperimentIsReady(true);
         setVariant(value);
+        
         if (value ==  '0') {
           // original version
           setButtonStyle('button--blue')
@@ -30,7 +34,7 @@ export default function Home() {
       }  
 
       window.gtag('event', 'optimize.callback', {
-        name: 'cP6RXp4FQw-MPFk4uwSK5A',
+        name: EXPERIMENT_ID,
         callback: implementExperimentA
       });    
 
