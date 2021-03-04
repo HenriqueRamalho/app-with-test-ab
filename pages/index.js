@@ -7,6 +7,20 @@ export default function Home() {
 
       dataLayer.push({'event': 'optimize.activate.my.first.experiment'});
 
+      function implementExperimentA(value) {
+        console.log("variante is:", value);
+        if (value ==  '0') {
+          // Provide code for visitors in the original.
+        } else if (value == '1') {
+          // Provide code for visitors in first variant.
+        }
+      }  
+
+      gtag('event', 'optimize.activate.my.first.experiment', {
+        name: 'cP6RXp4FQw-MPFk4uwSK5A',
+        callback: implementExperimentA
+     });      
+
   }, [])
 
   return (
