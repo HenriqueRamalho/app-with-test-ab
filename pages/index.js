@@ -77,11 +77,11 @@ export default function Home() {
 
       <main>
         <h1 className="title">
-          APP With  <a href="#">A/B test</a>
+          POC with  <a href="#">A/B test</a>
         </h1>
 
         <p className="description">
-          Get started by editing <code>pages/index.js</code>
+          Journey<code>team</code>
         </p>
 
         <div className="grid">
