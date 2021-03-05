@@ -55,7 +55,7 @@ export default function Home() {
     <div className="container">
 
       <Head>
-        <title>Create Next App - {JSON.stringify(process.env.NODE_ENV)}</title>
+        <title>POC Test A/B - {JSON.stringify(process.env.NODE_ENV)}</title>
         <link rel="icon" href="/favicon.ico" />
 
         <script
