@@ -1,36 +1,33 @@
-import react from 'react';
+import react, { useState } from 'react';
 import Head from 'next/head'
 
 /* 
 https://support.google.com/optimize/answer/9059383
 */
 
-const EXPERIMENT_ID = process.env.NODE_ENV === 'production' ? 'cP6RXp4FQw-MPFk4uwSK5A' : 'hihZQwxFTXCtANQyhJ79YQ'; 
+const EXPERIMENT_ID = process.env.NODE_ENV === 'production' ? '' : '5BAVdldVQ7a9VfRFdZ1s5Q'; 
 
 export default function Home() {
-  const [variant, setVariant] = react.useState('não definida');
-  const [experimentIsReady, setExperimentIsReady] = react.useState(false);
-  const [buttonStyle, setButtonStyle] = react.useState('button--blue');
-
+  const [variant, setVariant] = useState('não definida');
+  const [experimentIsReady, setExperimentIsReady] = useState(false);
+  const [headerColor, setHeaderColor] = useState(0);
+  const [imageColor, setImageColor] = useState(0);
   
   react.useEffect(() => {
 
-      dataLayer.push({'event': 'optimize.activate.my.first.experiment'});
+      function implementExperimentA(combination, experimentId, containerId) {
+        const [headerVariantion, sectionImageVariation] = combination.split('-');
+        console.log('headerVariantion: ', headerVariantion);
+        console.log('sectionImageVariation: ', sectionImageVariation);
+        console.log('variant: ', combination);
 
-      function implementExperimentA(value) {
-        console.log("Run the implementExperimentA");
-        console.log("value", value);
-        console.log(value);
-        setExperimentIsReady(true);
-        setVariant(value);
+        console.log("----------- run callback ------------");
+        console.log(`http://optimize.google.com/experiences/${experimentId}?` + `containerId=${containerId}&combination=${combination}`);
         
-        if (value ==  '0') {
-          // original version
-          setButtonStyle('button--blue')
-        } else if (value == '1') {
-          // variant 1 version
-          setButtonStyle('button--yellow')
-        }
+        setVariant(combination);
+        setHeaderColor(headerVariantion);
+        setImageColor(sectionImageVariation);             
+        setExperimentIsReady(true);        
       }  
 
       window.gtag('event', 'optimize.callback', {
@@ -40,45 +37,82 @@ export default function Home() {
 
   }, [])
 
-  const _handleClick = (e) => {
+  const _handleClickConversion = (e) => {
     e.preventDefault();
     console.log('converter objetivo');
     dataLayer.push({
       'event': 'interaction',
-      'event_category': 'appTest',
-      'event_action': 'actionTestGOal',
-      'event_label': 'labelTestgoal'
+      'event_category': 'convertion:multivariable'
     });
   }  
 
   return (
+<>
+    <Head>
+    <title>POC Test Multivariable - {JSON.stringify(process.env.NODE_ENV)}</title>
+    <link rel="icon" href="/favicon.ico" />
+
+    <script
+    async
+    src="https://www.googletagmanager.com/gtag/js?id=UA-191147710-1"
+  />
+  <script src="https://www.googleoptimize.com/optimize.js?id=OPT-MSKC8LF"></script>
+  <script
+      dangerouslySetInnerHTML={{
+        __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'UA-191147710-1');
+          `,
+      }}
+    />       
+  </Head>
+
     <div className="container">
-
-      <Head>
-        <title>POC Test A/B - {JSON.stringify(process.env.NODE_ENV)}</title>
-        <link rel="icon" href="/favicon.ico" />
-
-        <script
-        async
-        src="https://www.googletagmanager.com/gtag/js?id=UA-191147710-1"
-      />
-      <script src="https://www.googleoptimize.com/optimize.js?id=OPT-MSKC8LF"></script>
-      <script
-          dangerouslySetInnerHTML={{
-            __html: `
-                  window.dataLayer = window.dataLayer || [];
-                  function gtag(){dataLayer.push(arguments);}
-                  gtag('js', new Date());
-                  gtag('config', 'UA-191147710-1');
-              `,
-          }}
-        />       
-      </Head>
-
+    <header className={`header ${headerColor === '1' ? 'header--dark' : ''}`}>
+      <h1 className="title">
+        Header - POC with <a href="#">A/B test</a>
+      </h1>
+    </header>
+ 
       <main>
-        <h1 className="title">
-          POC with  <a href="#">A/B test</a>
-        </h1>
+        <section className="hero">
+          <div className="hero_text">
+            <h2>It's could be orange or blue</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus fringilla viverra ex, ut tincidunt sem faucibus in at ullamcorper mauris.</p>
+          </div>          
+          <div className={`block-image ${imageColor === '1' ? 'block-image--orange' : ''}`}></div>
+        </section>  
+
+        <section className="version-examples">
+          <table className="version-examples__table">
+            <thead>
+              <tr>
+                <th>Header</th>
+                <th>Imagem</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className={variant === '0-0' ? 'version-examples__active-row' : '' }>
+                <td>background branco (original)</td>
+                <td>imagem azul (original)</td>
+              </tr> 
+              <tr className={variant === '0-1' ? 'version-examples__active-row' : '' }>
+                <td>background branco (original)</td>
+                <td>imagem laranja (variante 1)</td>
+              </tr>  
+              <tr className={variant === '1-0' ? 'version-examples__active-row' : '' }>
+                <td>background preto (variante 1)</td>
+                <td>imagem azul (original)</td>
+              </tr>      
+              <tr className={variant === '1-1' ? 'version-examples__active-row' : '' }>
+                <td>background preto (variante 1)</td>
+                <td>imagem laranja (variante 1)</td>
+              </tr>                                                   
+            </tbody>
+          </table>
+        </section>      
 
         <p className="description">
           Journey<code>team</code>
@@ -97,12 +131,12 @@ export default function Home() {
 
           <div className="card">
             <h3>Without wait</h3>
-            <a className={`button ${buttonStyle}`} onClick={_handleClick}>Variante: {variant}</a>
+            <a className='button' onClick={_handleClickConversion}>Variante: {variant}</a>
           </div>
           <div className="card">
             <h3>Wait test callback</h3>
             {experimentIsReady && (
-              <a className={`button ${buttonStyle}`} onClick={_handleClick}>Variante: {variant}</a>
+              <a className='button' onClick={_handleClickConversion}>Variante: {variant}</a>
             )}
           </div>
         </div>
@@ -120,6 +154,41 @@ export default function Home() {
       </footer>
 
       <style jsx>{`
+        .version-examples {
+          padding: 64px 0;
+        }
+        .version-examples__table {
+          width: 600px;
+        }
+        .version-examples__active-row {
+          background: #4794EC !important;
+          color: white;
+        }
+        .header {
+          display: block;
+          width: 100%;
+          padding: 64px 32px;
+        }
+        .header--dark {
+          color: white;
+          background: black;
+        }
+        .hero {
+          display: flex;
+          max-width: 1150px;
+          padding-bottom: 32px;
+        }
+        .hero_text {
+          padding: 16px;
+        }
+        .block-image {
+          width: 600px;
+          height: 250px;
+          background: #0070f3;
+        }      
+        .block-image--orange {
+          background: #F0610C;
+        }  
         .container {
           min-height: 100vh;
           padding: 0 0.5rem;
@@ -258,6 +327,25 @@ export default function Home() {
           color: #000000;
         }
 
+        table {
+          border-collapse: collapse;
+          width: 100%;
+        }
+
+        th, td {
+          text-align: left;
+          padding: 16px;
+          text-align: center;
+        }
+
+        tr:nth-child(even){background-color: #f2f2f2}
+
+        th {
+          background-color: #B5B5B5;
+          color: black;
+          text-align: center;
+        }        
+
         @media (max-width: 600px) {
           .grid {
             width: 100%;
@@ -281,5 +369,6 @@ export default function Home() {
         }
       `}</style>
     </div>
+    </>
   )
 }
