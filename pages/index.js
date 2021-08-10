@@ -5,7 +5,7 @@ import Head from 'next/head'
 https://support.google.com/optimize/answer/9059383
 */
 
-const EXPERIMENT_ID = process.env.NODE_ENV === 'production' ? '' : '5BAVdldVQ7a9VfRFdZ1s5Q'; 
+const EXPERIMENT_ID = process.env.NODE_ENV === 'production' ? 'N4fZUvjsTk6UXoN_Wepg0A' : '5BAVdldVQ7a9VfRFdZ1s5Q'; 
 
 export default function Home() {
   const [variant, setVariant] = useState('não definida');
